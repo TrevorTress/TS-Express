@@ -20,11 +20,6 @@ const userSchema = new Schema({
 		unique: true,
 		match: [/.+@.+\..+/, 'Must match an email address!'],
 	},
-	password: {
-		type: String,
-		required: true,
-		minlength: 5,
-	},
 });
 
 const User = model('User', userSchema);

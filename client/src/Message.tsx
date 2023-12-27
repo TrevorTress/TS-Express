@@ -1,18 +1,20 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useQuery } from '@apollo/client';
+import { GET_USERS } from './apollo';
 import styled from 'styled-components';
 
 const Message: React.FC<X> = ({ className }) => {
-	const [message, setMessage] = useState('');
-	const getMessage = async () => {
-		const message = await axios.get('http://localhost:3001');
-		setMessage(message.data);
-	};
+	const { loading, data } = useQuery(GET_USERS);
 
-	useEffect(() => {
-		getMessage();
-	}, []);
-	return <span className={className}>{message}</span>;
+	if (!loading) {
+		console.log(data);
+	}
+	return (
+		<span className={className}>
+			{data?.users.map((user) => (
+				<h1>Hello, {user.firstName}</h1>
+			))}
+		</span>
+	);
 };
 
 export default styled(Message)``;
